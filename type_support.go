@@ -5,15 +5,15 @@ import (
 	"reflect"
 )
 
-func isPtr(a interface{}) bool {
+func IsPtr(a interface{}) bool {
 	return reflect.TypeOf(a).Kind() == reflect.Ptr
 }
 
-func isBool(a interface{}) bool {
+func IsBool(a interface{}) bool {
 	return reflect.TypeOf(a).Kind() == reflect.Bool
 }
 
-func isNumber(a interface{}) bool {
+func IsNumber(a interface{}) bool {
 	if a == nil {
 		return false
 	}
@@ -21,77 +21,77 @@ func isNumber(a interface{}) bool {
 	return reflect.Int <= kind && kind <= reflect.Float64
 }
 
-func isInteger(a interface{}) bool {
+func IsInteger(a interface{}) bool {
 	kind := reflect.TypeOf(a).Kind()
 	return reflect.Int <= kind && kind <= reflect.Int64
 }
 
-func isUnsignedInteger(a interface{}) bool {
+func IsUnsignedInteger(a interface{}) bool {
 	kind := reflect.TypeOf(a).Kind()
 	return reflect.Uint <= kind && kind <= reflect.Uint64
 }
 
-func isFloat(a interface{}) bool {
+func IsFloat(a interface{}) bool {
 	kind := reflect.TypeOf(a).Kind()
 	return reflect.Float32 <= kind && kind <= reflect.Float64
 }
 
-func toInteger(a interface{}) int64 {
-	if isInteger(a) {
+func ToInteger(a interface{}) int64 {
+	if IsInteger(a) {
 		return reflect.ValueOf(a).Int()
-	} else if isUnsignedInteger(a) {
+	} else if IsUnsignedInteger(a) {
 		return int64(reflect.ValueOf(a).Uint())
-	} else if isFloat(a) {
+	} else if IsFloat(a) {
 		return int64(reflect.ValueOf(a).Float())
 	} else {
 		panic(fmt.Sprintf("Expected a number!  Got <%T> %#v", a, a))
 	}
 }
 
-func toUnsignedInteger(a interface{}) uint64 {
-	if isInteger(a) {
+func ToUnsignedInteger(a interface{}) uint64 {
+	if IsInteger(a) {
 		return uint64(reflect.ValueOf(a).Int())
-	} else if isUnsignedInteger(a) {
+	} else if IsUnsignedInteger(a) {
 		return reflect.ValueOf(a).Uint()
-	} else if isFloat(a) {
+	} else if IsFloat(a) {
 		return uint64(reflect.ValueOf(a).Float())
 	} else {
 		panic(fmt.Sprintf("Expected a number!  Got <%T> %#v", a, a))
 	}
 }
 
-func toFloat(a interface{}) float64 {
-	if isInteger(a) {
+func ToFloat(a interface{}) float64 {
+	if IsInteger(a) {
 		return float64(reflect.ValueOf(a).Int())
-	} else if isUnsignedInteger(a) {
+	} else if IsUnsignedInteger(a) {
 		return float64(reflect.ValueOf(a).Uint())
-	} else if isFloat(a) {
+	} else if IsFloat(a) {
 		return reflect.ValueOf(a).Float()
 	} else {
 		panic(fmt.Sprintf("Expected a number!  Got <%T> %#v", a, a))
 	}
 }
 
-func isError(a interface{}) bool {
+func IsError(a interface{}) bool {
 	_, ok := a.(error)
 	return ok
 }
 
-func isChan(a interface{}) bool {
-	if isNil(a) {
+func IsChan(a interface{}) bool {
+	if IsNil(a) {
 		return false
 	}
 	return reflect.TypeOf(a).Kind() == reflect.Chan
 }
 
-func isMap(a interface{}) bool {
+func IsMap(a interface{}) bool {
 	if a == nil {
 		return false
 	}
 	return reflect.TypeOf(a).Kind() == reflect.Map
 }
 
-func isArrayOrSlice(a interface{}) bool {
+func IsArrayOrSlice(a interface{}) bool {
 	if a == nil {
 		return false
 	}
@@ -103,21 +103,21 @@ func isArrayOrSlice(a interface{}) bool {
 	}
 }
 
-func isString(a interface{}) bool {
+func IsString(a interface{}) bool {
 	if a == nil {
 		return false
 	}
 	return reflect.TypeOf(a).Kind() == reflect.String
 }
 
-func isFunc(a interface{}) bool {
-	if isNil(a) {
+func IsFunc(a interface{}) bool {
+	if IsNil(a) {
 		return false
 	}
 	return reflect.TypeOf(a).Kind() == reflect.Func
 }
 
-func toString(a interface{}) (string, bool) {
+func ToString(a interface{}) (string, bool) {
 	aString, isString := a.(string)
 	if isString {
 		return aString, true
@@ -136,7 +136,7 @@ func toString(a interface{}) (string, bool) {
 	return "", false
 }
 
-func lengthOf(a interface{}) (int, bool) {
+func LengthOf(a interface{}) (int, bool) {
 	if a == nil {
 		return 0, false
 	}
@@ -147,7 +147,7 @@ func lengthOf(a interface{}) (int, bool) {
 		return 0, false
 	}
 }
-func capOf(a interface{}) (int, bool) {
+func CapOf(a interface{}) (int, bool) {
 	if a == nil {
 		return 0, false
 	}
@@ -159,7 +159,7 @@ func capOf(a interface{}) (int, bool) {
 	}
 }
 
-func isNil(a interface{}) bool {
+func IsNil(a interface{}) bool {
 	if a == nil {
 		return true
 	}
